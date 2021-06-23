@@ -2,78 +2,110 @@ import React from "react";
 
 function reducer(state, action) {
   const [LEFT, RIGHT, UP, DOWN] = [37, 39, 38, 40];
-  const step = 5;
   switch (action.type) {
     case LEFT:
-      state.snake.pop();
-      state.snake.unshift({ x: state.snake[0].x - step, y: state.snake[0].y });
-      return { snake: state.snake };
-
+      if (
+        state.snake[0].x - 10 !== state.snake[1].x &&
+        state.snake[0].y - 0 !== state.snake[1].y
+      ) {
+        state.step = { x: -10, y: 0 };
+        state.direction = LEFT;
+        return state;
+      }
+      return state;
     case RIGHT:
-      state.snake.pop();
-      state.snake.unshift({ x: state.snake[0].x + step, y: state.snake[0].y });
-      return { snake: state.snake };
-
+      if (
+        state.snake[0].x + 10 !== state.snake[1].x &&
+        state.snake[0].y - 0 !== state.snake[1].y
+      ) {
+        state.step = { x: 10, y: 0 };
+        state.direction = RIGHT;
+        return state;
+      }
+      return state;
     case UP:
-      state.snake.pop();
-      state.snake.unshift({ x: state.snake[0].x, y: state.snake[0].y - step });
-      return { snake: state.snake };
-
+      if (
+        state.snake[0].x - 0 !== state.snake[1].x &&
+        state.snake[0].y - 10 !== state.snake[1].y
+      ) {
+        state.step = { x: 0, y: -10 };
+        state.direction = UP;
+      }
+      return state;
     case DOWN:
-      state.snake.pop();
-      state.snake.unshift({ x: state.snake[0].x, y: state.snake[0].y + step });
-      return { snake: state.snake };
+      if (
+        state.snake[0].x - 0 !== state.snake[1].x &&
+        state.snake[0].y + 10 !== state.snake[1].y
+      ) {
+        state.step = { x: 0, y: 10 };
+        state.direction = DOWN;
+        return state;
+      }
+
+      return state;
+    case "go":
+      if (state.stop === false && state.crash === false) {
+        state.snake.unshift({
+          x: state.snake[0].x + state.step.x,
+          y: state.snake[0].y + state.step.y,
+        });
+        state.snake.pop();
+      }
+      return state;
+    case "food":
+      state.snake = [
+        ...state.snake,
+        state.snake[state.snake.length - 1],
+        state.snake[state.snake.length - 1],
+        state.snake[state.snake.length - 1],
+        state.snake[state.snake.length - 1],
+      ];
+      return state;
+    case "stop":
+      return { ...state, stop: true };
+    case "start":
+      return { ...state, stop: false };
     default:
       return state;
   }
 }
 
-const useSnake = (speed, Snake) => {
-  const [direction, setDirection] = React.useState(0);
-
+const useSnake = (speed) => {
   const [state, dispatch] = React.useReducer(reducer, {
-    snake: Snake || [
+    snake: [
       { x: 10, y: 10 },
       { x: 20, y: 10 },
       { x: 30, y: 10 },
     ],
+    step: { x: 10, y: 0 },
+    direction: 0,
+    stop: true,
+    crash: false,
   });
 
   React.useEffect(() => {
-    const [LEFT, RIGHT, UP, DOWN] = [37, 39, 38, 40];
-
     document.onkeydown = checkKey;
+
     function checkKey(e) {
       e = e || window.event;
       const keyPressed = e.keyCode;
-      if (direction !== keyPressed) {
-        switch (keyPressed) {
-          case LEFT:
-            if (direction !== RIGHT) setDirection(LEFT);
-            break;
-          case RIGHT:
-            if (direction !== LEFT) setDirection(RIGHT);
-            break;
-          case UP:
-            if (direction !== DOWN) setDirection(UP);
-            break;
-          case DOWN:
-            if (direction !== UP) setDirection(DOWN);
-            break;
-        }
-      }
+      dispatch({ type: keyPressed });
     }
-  }, [setDirection, direction]);
+  }, [dispatch]);
 
   React.useEffect(() => {
-    const [LEFT, RIGHT, UP, DOWN] = [37, 39, 38, 40];
-
     const moviment = setInterval(() => {
-      dispatch({ type: direction });
+      dispatch({ type: "go" });
     }, speed);
     return () => clearInterval(moviment);
-  }, [direction, dispatch, speed]);
-  return state.snake;
+  }, [dispatch, speed]);
+
+  return [
+    state.snake,
+    () => dispatch({ type: "food" }),
+    () => dispatch({ type: "stop" }),
+    () => dispatch({ type: "start" }),
+  ];
 };
 
 export default useSnake;

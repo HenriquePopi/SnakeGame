@@ -1,6 +1,6 @@
 import React from "react";
 
-const useCanvas = (draw, options) => {
+const useCanvas = (draw, toPaint, options) => {
   const canvasRef = React.useRef(null);
 
   const paint = draw;
@@ -12,14 +12,12 @@ const useCanvas = (draw, options) => {
 
     const context = canvas.getContext("2d");
 
-    let frameCount = 0;
     let animationFrameId;
 
     // draw came here
     const render = () => {
-      paint(context);
+      paint(context, toPaint);
       if (options?.anime === true) {
-        frameCount++;
         animationFrameId = window.requestAnimationFrame(render);
       }
     };
@@ -27,7 +25,7 @@ const useCanvas = (draw, options) => {
     return () => {
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [paint]);
+  }, [paint, options, toPaint]);
 
   return canvasRef;
 };
