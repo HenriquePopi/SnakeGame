@@ -55,10 +55,10 @@ function reducer(state, action) {
     case "food":
       state.snake = [
         ...state.snake,
-        state.snake[state.snake.length - 1],
-        state.snake[state.snake.length - 1],
-        state.snake[state.snake.length - 1],
-        state.snake[state.snake.length - 1],
+        state.snake[0],
+        state.snake[0],
+        state.snake[0],
+        state.snake[0],
       ];
       return state;
     case "stop":
@@ -73,11 +73,11 @@ function reducer(state, action) {
 const useSnake = (speed) => {
   const [state, dispatch] = React.useReducer(reducer, {
     snake: [
-      { x: 10, y: 10 },
-      { x: 20, y: 10 },
-      { x: 30, y: 10 },
+      { x: 0, y: 0 },
+      { x: 10, y: 0 },
+      { x: 20, y: 0 },
     ],
-    step: { x: 10, y: 0 },
+    step: { x: 0, y: 10 },
     direction: 0,
     stop: true,
     crash: false,
