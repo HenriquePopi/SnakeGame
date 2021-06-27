@@ -33,11 +33,17 @@ const blink2 = keyframes`
 5%{
   opacity: 0;
 }
-10%{
+12%{
   opacity: 0;
 }
 15%{
   opacity: 1;
+}
+17%{
+  opacity: 0;
+}
+76%{
+  opacity: 0;
 }
 78%{
   opacity: 1;
@@ -45,16 +51,14 @@ const blink2 = keyframes`
 80%{
   opacity: 0;
 }
-85%{
-  opacity: 0;
-}
+
 100%{
   opacity: 0;
 }
 `;
 
 export const NeonButton = styled.button`
-  font-size: ${(props) => (props.size ? props.size : `2rem`)};
+  font-size: ${(props) => props.size || `1.5rem`};
   display: inline-block;
   cursor: pointer;
   background: none;
@@ -72,7 +76,7 @@ export const NeonButton = styled.button`
 
   ::before {
     pointer-events: none;
-    content: "aaa";
+    content: "";
     position: absolute;
     background: hsl(317 100% 54%);
     top: 120%;
@@ -153,20 +157,17 @@ export const NeonLetter = styled.p`
 export const NeonLetterBlink = styled(NeonLetter)`
   animation: ${blink} 2s linear 0.2s infinite;
   animation-delay: ${(props) => props.delay};
+  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
   ::before {
-    animation: ${blink} 2s linear 0.2s infinite;
+    opacity: 1;
   }
 `;
-export const NeonLetterBlink2 = styled(NeonLetter)`
+export const NeonLetterBlink2 = styled(NeonLetterBlink)`
   animation: ${blink2} 2s linear 0.2s infinite;
-  animation-delay: ${(props) => props.delay};
-  ::before {
-    animation: ${blink2} 2s linear 0.2s infinite;
-  }
 `;
 ////////////////////////////////
 export const Space = styled.div`
-  height: ${(props) => (props.height ? props.height : "1rem")};
+  height: ${(props) => props.height || "1rem"};
 `;
 
 export const LetterContainer = styled.div`

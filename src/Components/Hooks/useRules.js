@@ -10,7 +10,7 @@ const useRules = (
   canvasWidth,
   canvasHeigth
 ) => {
-  const [isDead, setIsDead] = React.useState(true);
+  const [isDead, setIsDead] = React.useState(false);
   React.useEffect(() => {
     if (isDead) return;
     const rulesInterval = setInterval(() => {
@@ -50,8 +50,6 @@ const useRules = (
     isDead,
     setIsDead,
   ]);
-
-  return () => setIsDead(false);
 };
 
 export default useRules;

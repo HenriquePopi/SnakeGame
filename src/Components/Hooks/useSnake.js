@@ -70,13 +70,16 @@ function reducer(state, action) {
   }
 }
 
-const useSnake = (speed) => {
+const useSnake = (
+  speed,
+  snake = [
+    { x: 0, y: 0 },
+    { x: 10, y: 0 },
+    { x: 20, y: 0 },
+  ]
+) => {
   const [state, dispatch] = React.useReducer(reducer, {
-    snake: [
-      { x: 0, y: 0 },
-      { x: 10, y: 0 },
-      { x: 20, y: 0 },
-    ],
+    snake: snake,
     step: { x: 0, y: 10 },
     direction: 0,
     stop: true,
@@ -84,6 +87,7 @@ const useSnake = (speed) => {
   });
 
   React.useEffect(() => {
+    dispatch({ type: "start" });
     document.onkeydown = checkKey;
 
     function checkKey(e) {
@@ -104,7 +108,7 @@ const useSnake = (speed) => {
     state.snake,
     () => dispatch({ type: "food" }),
     () => dispatch({ type: "stop" }),
-    () => dispatch({ type: "start" }),
+    // () => dispatch({ type: "start" }),
   ];
 };
 
