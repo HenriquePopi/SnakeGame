@@ -1,8 +1,60 @@
-import styled from "styled-components";
-import React from "react";
+import styled, { keyframes } from "styled-components";
+
+const blink = keyframes`
+0%{
+  opacity: 0;
+}
+5%{
+  opacity: 1;
+}
+10%{
+  opacity: 0;
+}
+15%{
+  opacity: 1;
+}
+78%{
+  opacity: 1;
+}
+80%{
+  opacity: 0;
+}
+85%{
+  opacity: 1;
+}
+100%{
+  opacity: 1;
+}
+`;
+const blink2 = keyframes`
+0%{
+  opacity: 1;
+}
+5%{
+  opacity: 0;
+}
+10%{
+  opacity: 0;
+}
+15%{
+  opacity: 1;
+}
+78%{
+  opacity: 1;
+}
+80%{
+  opacity: 0;
+}
+85%{
+  opacity: 0;
+}
+100%{
+  opacity: 0;
+}
+`;
 
 export const NeonButton = styled.button`
-  font-size: 4rem;
+  font-size: ${(props) => (props.size ? props.size : `2rem`)};
   display: inline-block;
   cursor: pointer;
   background: none;
@@ -61,4 +113,67 @@ export const NeonButton = styled.button`
   :focus::after {
     opacity: 1;
   }
+`;
+
+export const NeonLetter = styled.p`
+  font-size: 4rem;
+  display: inline-block;
+  cursor: pointer;
+  color: hsl(317 100% 54%);
+  padding: 0;
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+  text-shadow: none;
+  position: relative;
+
+  ::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    background: hsl(317 100% 54%);
+    top: 120%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+    filter: blur(1em);
+    opacity: 0.5;
+  }
+
+  :hover,
+  :focus {
+    text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
+  }
+
+  :hover::before,
+  :focus::before {
+    opacity: 1;
+  }
+`;
+export const NeonLetterBlink = styled(NeonLetter)`
+  animation: ${blink} 2s linear 0.2s infinite;
+  animation-delay: ${(props) => props.delay};
+  ::before {
+    animation: ${blink} 2s linear 0.2s infinite;
+  }
+`;
+export const NeonLetterBlink2 = styled(NeonLetter)`
+  animation: ${blink2} 2s linear 0.2s infinite;
+  animation-delay: ${(props) => props.delay};
+  ::before {
+    animation: ${blink2} 2s linear 0.2s infinite;
+  }
+`;
+////////////////////////////////
+export const Space = styled.div`
+  height: ${(props) => (props.height ? props.height : "1rem")};
+`;
+
+export const LetterContainer = styled.div`
+  display: inline-block;
+  margin: 0 1rem 0 1rem;
+`;
+export const Centralizer = styled.div`
+  display: flex;
+  justify-content: center;
 `;

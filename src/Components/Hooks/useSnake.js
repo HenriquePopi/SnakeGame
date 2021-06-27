@@ -55,10 +55,10 @@ function reducer(state, action) {
     case "food":
       state.snake = [
         ...state.snake,
-        state.snake[0],
-        state.snake[0],
-        state.snake[0],
-        state.snake[0],
+        state.snake[1],
+        state.snake[1],
+        state.snake[1],
+        state.snake[1],
       ];
       return state;
     case "stop":

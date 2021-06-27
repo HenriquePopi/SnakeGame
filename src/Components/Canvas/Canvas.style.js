@@ -15,7 +15,7 @@ export const InnerCanvas = styled.div`
   border: hsl(317 100% 54%) 0.125em solid;
   padding: 0.25em 1em;
   border-radius: 0.25em;
-  box-shadow: inset 0 0 1em 0 hsl(317 100% 54%), 0 0 0.5em 0 hsl(317 100% 54%);
+  box-shadow: inset 0 0 1.5em 0 hsl(317 100% 54%), 0 0 1em 0 hsl(317 100% 54%);
 `;
 export const Canvas = styled.canvas`
   display: block;
@@ -23,7 +23,7 @@ export const Canvas = styled.canvas`
   width: 500px;
   height: 500px;
   box-sizing: border-box;
-  border: 1px solid white;
+  border: 1px solid none;
   margin: 0 auto;
   background-color: none;
 `;
