@@ -8,23 +8,24 @@ const useCanvas = (draw, toPaint, options) => {
   React.useEffect(() => {
     const canvas = canvasRef.current;
 
-    resizeCanvas(canvas);
+    if (canvas !== null) {
+      resizeCanvas(canvas);
+      const context = canvas.getContext("2d");
 
-    const context = canvas.getContext("2d");
+      let animationFrameId;
 
-    let animationFrameId;
-
-    // draw came here
-    const render = () => {
-      paint(context, toPaint);
-      if (options?.anime === true) {
-        animationFrameId = window.requestAnimationFrame(render);
-      }
-    };
-    render();
-    return () => {
-      window.cancelAnimationFrame(animationFrameId);
-    };
+      // draw came here
+      const render = () => {
+        paint(context, toPaint);
+        if (options?.anime === true) {
+          animationFrameId = window.requestAnimationFrame(render);
+        }
+      };
+      render();
+      return () => {
+        window.cancelAnimationFrame(animationFrameId);
+      };
+    }
   }, [paint, options, toPaint]);
 
   return canvasRef;

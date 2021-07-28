@@ -11,6 +11,7 @@ const useRules = (
   canvasHeigth
 ) => {
   const [isDead, setIsDead] = React.useState(false);
+  React.useEffect(setFoodPosition, []);
   React.useEffect(() => {
     if (isDead) return;
     const rulesInterval = setInterval(() => {
@@ -36,7 +37,6 @@ const useRules = (
         }
       }
     }, speed - 50);
-
     return () => clearInterval(rulesInterval);
   }, [
     snake,
@@ -50,6 +50,7 @@ const useRules = (
     isDead,
     setIsDead,
   ]);
+  return isDead;
 };
 
 export default useRules;

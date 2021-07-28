@@ -1,6 +1,6 @@
 import React from 'react';
 import Animation from './Animation';
-import { NeonLetter , NeonLetterBlink, NeonLetterBlink2,LetterContainer, NeonButton,Centralizer, Space} from '../Styles/styledComponents';
+import { NeonLetter , NeonLetterBlink, LetterContainer, NeonButton,Centralizer, Space, AnimatedContainer} from '../Styles/styledComponents';
 
 const text ={
     snake:["S",'N','A','K','E'],
@@ -15,26 +15,31 @@ const Home = ({startGame}) => {
     
     return (
         <>
-         {startAnimation && <Animation startGame={startGame} />}
-         <Space height="8rem"/>
-        <LetterContainer>{
-            text.cyber.map((letter,i) => {
-                if ( i === 0) return <NeonLetterBlink2 delay ="2.1s">{letter}</NeonLetterBlink2>
-                return <NeonLetter>{letter}</NeonLetter>
-        })
-        }</LetterContainer>
-         <LetterContainer>{
-            text.snake.map((letter,i) => {
-                if ( i === 3) return <NeonLetterBlink delay ="2.25s" >{letter}</NeonLetterBlink>
-                return <NeonLetter>{letter}</NeonLetter>
-        })
-        }</LetterContainer>
+        {startAnimation && <Animation startGame={startGame} />}
+        <AnimatedContainer animate ={startAnimation} delay ={"5.5s"}>
+            <Space height="8rem"/>
+        
+            <LetterContainer>{
+                text.cyber.map((letter,i) => {
+                    if ( i === 2) return <NeonLetterBlink delay ="2.1s">{letter}</NeonLetterBlink>
+                    return <NeonLetter>{letter}</NeonLetter>
+            })
+            }</LetterContainer>
+            <LetterContainer>{
+                text.snake.map((letter,i) => {
+                    if ( i === 3) return <NeonLetterBlink delay ="2.25s" >{letter}</NeonLetterBlink>
+                    return <NeonLetter>{letter}</NeonLetter>
+            })
+            }
+            
+            </LetterContainer>
+        
             <Space height="8rem"/>
             <Centralizer>
-             <NeonButton onClick={()=> setStartAnimation(true)} >Start Game</NeonButton>
+             <NeonButton onClick={()=> setStartAnimation("blink")} >Start Game</NeonButton>
             </Centralizer>
+            </AnimatedContainer>
             </>
-        
     );
 };
 

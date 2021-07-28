@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 const blink = keyframes`
 0%{
@@ -26,38 +26,37 @@ const blink = keyframes`
   opacity: 1;
 }
 `;
-const blink2 = keyframes`
+const blinkBorderLeft = keyframes`
+
 0%{
-  opacity: 1;
-}
-5%{
-  opacity: 0;
+  border-left: none;
 }
 12%{
-  opacity: 0;
+  border-left: none;
 }
 15%{
-  opacity: 1;
+  border-left: hsl(317 100% 54%);
 }
 17%{
-  opacity: 0;
+  border-left: none;
 }
 76%{
-  opacity: 0;
+  border-left: none;
 }
 78%{
-  opacity: 1;
+  border-left: hsl(317 100% 54%);
 }
 80%{
-  opacity: 0;
+  border-left: none;
 }
 
 100%{
-  opacity: 0;
+  border-left: none;
 }
 `;
 
 export const NeonButton = styled.button`
+  outline: none;
   font-size: ${(props) => props.size || `1.5rem`};
   display: inline-block;
   cursor: pointer;
@@ -155,7 +154,7 @@ export const NeonLetter = styled.p`
   }
 `;
 export const NeonLetterBlink = styled(NeonLetter)`
-  animation: ${blink} 2s linear 0.2s infinite;
+  animation: ${blink} 1.5s linear 0.2s infinite;
   animation-delay: ${(props) => props.delay};
   text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
   ::before {
@@ -163,9 +162,42 @@ export const NeonLetterBlink = styled(NeonLetter)`
   }
 `;
 export const NeonLetterBlink2 = styled(NeonLetterBlink)`
-  animation: ${blink2} 2s linear 0.2s infinite;
+  animation: ${blink} 1.5s linear 0.2s infinite;
 `;
+// ANIMATION
+
+export const AnimatedContainer = styled.div`
+  animation-duration: ${(props) => props.duration};
+  animation-timing-function: ${(props) => props.timingFunction};
+  animation-delay: ${(props) => props.delay};
+  animation-iteration-count: ${(props) => props.iterationCount};
+  animation-direction: ${(props) => props.direction};
+  animation-fill-mode: ${(props) => props.fillMode};
+  animation-play-state: ${(props) => props.playState};
+  display: ${(props) => props.display};
+  ${(props) =>
+    props.animate === "blink" &&
+    css`
+      animation: ${blink} 2s linear 0.2s infinite;
+    `}
+  ${(props) =>
+    props.animate === "blinkBorderLeft" &&
+    css`
+      animation: ${blinkBorderLeft} 2s linear 0.2s infinite;
+    `}
+`;
+AnimatedContainer.defaultProps = {
+  duration: "1s",
+  timingFunction: "linear",
+  delay: "0s",
+  iterationCount: "1",
+  direction: "normal",
+  fillMode: "both",
+  playState: "running",
+  display: "block",
+};
 ////////////////////////////////
+
 export const Space = styled.div`
   height: ${(props) => props.height || "1rem"};
 `;

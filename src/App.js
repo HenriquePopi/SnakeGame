@@ -4,7 +4,7 @@ import Game from "./Components/Screens/Game";
 import Home from "./Components/Screens/Home";
 const App = () => {
   const [startGame, setStartGame] = React.useState([]);
-  const shoWGame = (startGame.length && true) || false;
+  const shoWGame = !!startGame.length;
   return (
     <Container>
       {!shoWGame && <Home startGame={(snake) => setStartGame(snake)} />}

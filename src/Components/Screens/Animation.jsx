@@ -2,7 +2,6 @@ import React from 'react';
 import useSnake from "../Hooks/useSnake"
 import useCanvas from '../Hooks/useCanvas';
 import drawSnake from "../Drawers/Snake"
-import drawFood from "../Drawers/Food"
 import { Canvas } from '../Canvas/Canvas.style';
 
 const w = window.innerWidth;
@@ -14,11 +13,11 @@ const Animation = ({startGame}) => {
 
     setTimeout(()=>{
             return startGame(snake)
-        },5000)
+        },7000)
 
     return (
        
-        <Canvas width={"800px"} height={"600px"}  ref= {canvas} />
+        <Canvas width={"800px"} height={"600px"}  ref= {canvas}/>
         
         
     )
